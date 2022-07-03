@@ -10,7 +10,7 @@ name: It is me
 age: 12
 others: keeps going
 
-Dictionary starts with -
+list starts with -
 - me
 - you
 - it
