@@ -1,0 +1,23 @@
+Yet another Markup Language
+
+Starts with ---
+
+comments with #
+# This is a comment
+
+Yaml dictionary contains key value pairs
+name: It is me
+age: 12
+others: keeps going
+
+Dictionary starts with -
+- me
+- you
+- it
+or could be seen like this
+category:
+  - some
+  - thing
+  - here
+or even like this
+category: ['some, 'thing', here']
