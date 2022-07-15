@@ -1,7 +1,7 @@
-yaml 
+*yaml 
 
-setting up environment
-	- you can use virtual machines or real machines or use cloud providers machines or mix of all of these. connection between acn and node is enough
+*setting up environment
+	- you can use virtual machines or real machines or use cloud providers machines or mix of all of these. connection between acn and node is enough (if you clone virtual machines do not ferget to reset machine-id)
 	- ansible control node with ansible python and ssh-client installed (optionally sshpass)
 	- other nodes with sshd and python installed
 	- (optionally) edit /etc/hosts file for name resolution if servers does not have 
@@ -25,9 +25,19 @@ setting up environment
 	- restart sshd service (service module)
 	- make sure acn can ping nodes
 
-ansible.cfg
-inventory
-fork -f
+*inventory
+
+*ansible.cfg
+	- uncomment and modify parameters you need from example ansible config (https://github.com/ansible/ansible/blob/stable-2.9/examples/ansible.cfg)
+	- for example
+		- inventory = /path/to/hosts.yml
+		- forks     = 5 # 5 is default value for parallel jobs
+		- private_key_file = /path/to/file # you can use this instead of --private-key parameter
+		- remote_user = ansible
+*ansible-doc
+	- documentation for modules 
+	- has good examples too
+
 
 
 real world scenario
