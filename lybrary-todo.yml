@@ -1,0 +1,56 @@
+---
+tools:
+  git
+  vim
+  emacs
+  tmux
+  grubby
+  reflector
+  busybox
+  ventoy
+  sed
+  archiso
+world-wide-web:
+  applications:
+    rocketchat
+    nextcloud
+    mattermost
+    beef
+    wordpress
+    crowdsec
+  services:
+    mariadb
+    apache2
+    nginx
+operation-systems:
+  BSD
+  Edication-OS
+  ipxe
+  tiny-core-linux
+  proxmox
+projects:
+  lazy-man-pages
+  old-router--internet-sharing--software-access-point
+  ssh-changing-keys-every-time-login
+  local-netboot-server
+  random-wallpaper-script
+  live-under-hypervisor
+  vim --todo
+  archinstall-config-files-baremetal-virtual-machine
+research:
+  read-only-storages
+  securing-usb-ports
+  disabling-keyboard
+  virt-manager-vm-directories
+  replacing-mouse-with-joystick
+  nfs-noexec-nosuid
+  mouse-for-tty
+  xorg-twm
+  xfce4-undercover-for-others
+  ssh-2-different-keys-dimensions
+  pid-max-value-with-max-uptime
+  fitting-one-big-file-in-multiple-optical-drives
+  gopher
+  bruteforce-local-servers
+  rss-for-local-websites
+  init=/bin/bash-or-rd.break-with-crypted-drives
