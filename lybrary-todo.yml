@@ -37,6 +37,7 @@ projects:
   live-under-hypervisor
   vim --todo
   archinstall-config-files-baremetal-virtual-machine
+  remote-dotfiles
 research:
   read-only-storages
   securing-usb-ports
