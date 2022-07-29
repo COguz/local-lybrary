@@ -1,0 +1,4 @@
+set root=(hd0,3) # OS partition
+linux /boot/vmlinuz-4.2.0-16-generic root=/dev/sdb3
+initrd /boot/initrd.img-4.2.0-16-generic
+boot

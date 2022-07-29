@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="icon" type="image/png" href="/favicon.png">
+
+        <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>XMonad Configuration Tutorial | xmonad - the tiling window manager that rocks</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="XMonad Configuration Tutorial" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The xmonad.org website" />
+<meta property="og:description" content="The xmonad.org website" />
+<link rel="canonical" href="https://xmonad.org/TUTORIAL.html" />
+<meta property="og:url" content="https://xmonad.org/TUTORIAL.html" />
+<meta property="og:site_name" content="xmonad - the tiling window manager that rocks" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="XMonad Configuration Tutorial" />
+<meta name="twitter:site" content="@xmonad" />
+<script type="application/ld+json">
+{"headline":"XMonad Configuration Tutorial","description":"The xmonad.org website","url":"https://xmonad.org/TUTORIAL.html","@type":"WebPage","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://xmonad.org/images/xmonad-logo.png"}},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+        <link type="application/atom+xml" rel="alternate" href="https://xmonad.org/feed.xml" title="xmonad - the tiling window manager that rocks" />
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <nav class="navbar navbar-expand-lg navbar-light mb-2">
+            <div class="container-fluid">
+                <div class="me-auto">
+                    <h4><a href="/">
+                        <img src="/images/logo-wordmark.svg" alt="xmonad wordmark" width="200">
+                    </a></h4>
+                    <h5 class="text-secondary">“That was easy. xmonad rocks!”</h5>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/documentation.html">Documentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/download.html">Download</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/community.html">Community</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/posts.html">News/Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/sponsors/xmonad" title="Support us">
+                                Support us <svg role="img" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="github-sponsors"><path fill-rule="evenodd" d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5zM8 14.25l-.345.666-.002-.001-.006-.003-.018-.01a7.643 7.643 0 01-.31-.17 22.075 22.075 0 01-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.08 22.08 0 01-3.744 2.584l-.018.01-.006.003h-.002L8 14.25zm0 0l.345.666a.752.752 0 01-.69 0L8 14.25z"></path></svg>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/xmonad/xmonad">
+                                <img src="/images/GitHub-Mark-32px.png" alt="github logo">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+    <h1>XMonad Configuration Tutorial</h1>
+    <p>We’re going to take you, step-by-step, through the process of
+configuring xmonad, setting up <a href="https://xmobar.org/">xmobar</a> as a status bar, configuring
+<a href="https://github.com/sargon/trayer-srg">trayer-srg</a> as a tray, and making it all play nicely together.</p>
+
+<p>We assume that you have read the <a href="https://xmonad.org/tour.html">xmonad guided tour</a> already.  It is a
+bit dated at this point but, because xmonad is stable, the guide should
+still give you a good overview of the most basic functionality.</p>
+
+<p>Before we begin, here are two screenshots of the kind of desktop we will
+be creating together.  In particular, a useful layout we’ll conjure into
+being—the three columns layout from <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Layout-ThreeColumns.html">XMonad.Layout.ThreeColumns</a> with
+the ability to magnify stack windows via <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Layout-Magnifier.html">XMonad.Layout.Magnifier</a>:</p>
+
+<p>
+<img alt="blank desktop" src="https://user-images.githubusercontent.com/50166980/111586872-c0eb0e00-87c1-11eb-9129-c2781bbbf227.png" width="550" />
+<img alt="blank desktop" src="https://user-images.githubusercontent.com/50166980/111586885-c47e9500-87c1-11eb-8e8e-83d4d33c4c8d.png" width="550" />
+</p>
+
+<p>So let’s get started!</p>
+
+<h2 id="preliminaries">Preliminaries</h2>
+
+<p>First you’ll want to install xmonad.  You can either do this with your
+system’s package manager or via <code class="language-plaintext highlighter-rouge">stack</code>/<code class="language-plaintext highlighter-rouge">cabal</code>.  The latter may be
+necessary if your distribution does not package <code class="language-plaintext highlighter-rouge">xmonad</code> and
+<code class="language-plaintext highlighter-rouge">xmonad-contrib</code> (or packages a version that’s very old) or you want to
+use the git versions instead of a tagged release.  You can find
+instructions for how to do this in <a href="/INSTALL.html">INSTALL.md</a>.</p>
+
+<p>One more word of warning: if you are on a distribution that installs
+every Haskell package dynamically linked—thus essentially breaking
+Haskell—(Arch Linux being a prominent example) then we would highly
+recommend installing via <code class="language-plaintext highlighter-rouge">stack</code> or <code class="language-plaintext highlighter-rouge">cabal</code> as instructed in
+<a href="/INSTALL.html">INSTALL.md</a>.  If you still want to install xmonad via your system’s
+package manager, you will need to <code class="language-plaintext highlighter-rouge">xmonad --recompile</code> <em>every time</em> a
+Haskell dependency is updated—else xmonad may fail to start when you
+want to log in!</p>
+
+<p>We’re going to assume xmonad version <code class="language-plaintext highlighter-rouge">0.17.0</code> and xmonad-contrib version
+<code class="language-plaintext highlighter-rouge">0.17.0</code> here, though most of these steps should work with older
+versions as well.  When we get to the relevant parts, will point you to
+alternatives that work with at least xmonad version <code class="language-plaintext highlighter-rouge">0.15</code> and
+xmonad-contrib version <code class="language-plaintext highlighter-rouge">0.16</code>.  This will usually be accompanied by a
+big “<em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17.0</code></em>”, so don’t worry about missing
+it!</p>
+
+<p>Throughout the tutorial we will use, for keybindings, a syntax very akin
+to the <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Sequences.html#Key-Sequences">GNU Emacs conventions</a> for the same thing—so <code class="language-plaintext highlighter-rouge">C-x</code> means “hold
+down the control key and then press the <code class="language-plaintext highlighter-rouge">x</code> key”.  One exception is that
+in our case <code class="language-plaintext highlighter-rouge">M</code> will not necessarily mean Alt (also called <code class="language-plaintext highlighter-rouge">Meta</code>), but
+“your modifier key”; this is Alt by default, although many people map it
+to Super instead (I will show you how to do this below).</p>
+
+<p>This guide should work for any GNU/Linux distribution and even for BSD
+folks.  Because debian-based distributions are still rather popular, we
+will give you the <code class="language-plaintext highlighter-rouge">apt</code> commands when it comes to installing software.
+If you use another distribution, just substitute the appropriate
+commands for your system.</p>
+
+<p>To install xmonad, as well as some utilities, via <code class="language-plaintext highlighter-rouge">apt</code> you can just run</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>apt-get <span class="nb">install </span>xmonad libghc-xmonad-contrib-dev libghc-xmonad-dev suckless-tools
+</code></pre></div></div>
+
+<p>This installs xmonad itself, everything you need to configure it, and
+<code class="language-plaintext highlighter-rouge">suckless-tools</code>, which provides the application launcher <code class="language-plaintext highlighter-rouge">dmenu</code>.  This
+program is used as the default application launcher on <code class="language-plaintext highlighter-rouge">M-p</code>.</p>
+
+<p>If you are installing xmonad with <code class="language-plaintext highlighter-rouge">stack</code> or <code class="language-plaintext highlighter-rouge">cabal</code>, remember to <em>not</em>
+install <code class="language-plaintext highlighter-rouge">xmonad</code> and its libraries here!</p>
+
+<p>For the remainder of this document, we will assume that you are running
+a live xmonad session in some capacity.  If you have set up your
+<code class="language-plaintext highlighter-rouge">~/.xinitrc</code> as directed in the xmonad guided tour, you should be good
+to go!  If not, just smack an <code class="language-plaintext highlighter-rouge">exec xmonad</code> at the bottom of that file.</p>
+
+<h2 id="installing-xmobar">Installing Xmobar</h2>
+
+<p>What we need to do now—provided we want to use a bar at all—is to
+install <a href="https://xmobar.org/">xmobar</a>.  If you visit <a href="https://github.com/jaor/xmobar#installation">xmobar’s <code class="language-plaintext highlighter-rouge">Installation</code> section</a> you
+will find everything from how to install it with your system’s package
+manager all the way to how to compile it yourself.</p>
+
+<p>We will show you how we make these programs talk to each other a bit
+later on.  For now, let’s start to explore how we can customize this
+window manager of ours!</p>
+
+<h2 id="customizing-xmonad">Customizing XMonad</h2>
+
+<p>Xmonad’s configuration file is written in <a href="https://www.haskell.org/">Haskell</a>—but don’t worry, we
+won’t assume that you know the language for the purposes of this
+tutorial.  The configuration file can either reside within
+<code class="language-plaintext highlighter-rouge">$XDG_CONFIG_HOME/xmonad</code>, <code class="language-plaintext highlighter-rouge">~/.xmonad</code>, or <code class="language-plaintext highlighter-rouge">$XMONAD_CONFIG_DIR</code>; see
+<code class="language-plaintext highlighter-rouge">man 1 xmonad</code> for further details (the likes of <code class="language-plaintext highlighter-rouge">$XDG_CONFIG_HOME</code> is
+called a <a href="https://www.shellscript.sh/variables1.html">shell variable</a>).  Let’s use <code class="language-plaintext highlighter-rouge">$XDG_CONFIG_HOME/xmonad</code> for the
+purposes of this tutorial, which resolves to <code class="language-plaintext highlighter-rouge">~/.config/xmonad</code> on most
+systems—the <code class="language-plaintext highlighter-rouge">~/.config</code> directory is also the place where things will
+default to should <code class="language-plaintext highlighter-rouge">$XDG_CONFIG_HOME</code> not be set.</p>
+
+<p>First, we need to create <code class="language-plaintext highlighter-rouge">~/.config/xmonad</code> and, in this directory, a
+file called <code class="language-plaintext highlighter-rouge">xmonad.hs</code>.  We’ll start off with importing some of the
+utility modules we will use.  At the very top of the file, write</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad</span>
+
+<span class="kr">import</span> <span class="nn">XMonad.Util.EZConfig</span>
+<span class="kr">import</span> <span class="nn">XMonad.Util.Ungrab</span>
+</code></pre></div></div>
+
+<p>All of these imports are <em>unqualified</em>, meaning we are importing all of
+the functions in the respective modules.  For configuration files this
+is what most people want.  If you prefer to import things explicitly
+you can do so by adding the necessary function to the <code class="language-plaintext highlighter-rouge">import</code> statement
+in parentheses.  For example</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad.Util.EZConfig</span> <span class="p">(</span><span class="nf">additionalKeysP</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>For the purposes of this tutorial, we will be importing everything
+coming from xmonad directly unqualified.</p>
+
+<p>Next, a basic configuration—which is the same as the default config—is
+this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="n">def</span>
+</code></pre></div></div>
+
+<p>In case you’re interested in what this default configuration actually
+looks like, you can find it under <a href="https://github.com/xmonad/xmonad/blob/master/src/XMonad/Config.hs">XMonad.Config</a>.  Do note that it is
+<em>not</em> advised to copy that file and use it as the basis of your
+configuration, as you won’t notice when a default changes!</p>
+
+<p>You should be able to save the above file, with the import lines plus
+the other two and then press <code class="language-plaintext highlighter-rouge">M-q</code> to load it up.  Another way to
+validate your <code class="language-plaintext highlighter-rouge">xmonad.hs</code> is to simply run <code class="language-plaintext highlighter-rouge">xmonad --recompile</code> in a
+terminal.  You’ll see errors (in an <code class="language-plaintext highlighter-rouge">xmessage</code> popup, so make sure that
+is installed on your system) if it’s bad, and nothing if it’s good.
+It’s not the end of the world if you restart xmonad and get errors, as
+you will still be on your old, working, configuration and have all the
+time in the world to fix your errors before trying again!</p>
+
+<p>Let’s add a few additional things.  The default modifier key is Alt,
+which is also used in Emacs.  Sometimes Emacs and xmonad want to use the
+same key for different actions.  Rather than remap every common key,
+many people just change Mod to be the Super key—the one between Ctrl and
+Alt on most keyboards.  We can do this by changing the above <code class="language-plaintext highlighter-rouge">main</code>
+function in the following way:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span> <span class="o">=</span> <span class="n">mod4Mask</span>  <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>The two dashes signify a comment to the end of the line.  Notice the
+curly braces; these stand for a <a href="http://learnyouahaskell.com/making-our-own-types-and-typeclasses">record update</a> in Haskell (records are
+sometimes called “structs” in C-like languages).  What it means is “take
+<code class="language-plaintext highlighter-rouge">def</code> and change its <code class="language-plaintext highlighter-rouge">modMask</code> field to the thing <strong>I</strong> want”.  Taking a
+record that already has some defaults set and modifying only the fields
+one cares about is a pattern that is often used within xmonad, so it’s
+worth pausing for a bit here to really take this new syntax in.</p>
+
+<p>Don’t mind the dollar sign too much; it essentially serves to split
+apart the <code class="language-plaintext highlighter-rouge">xmonad</code> function and the <code class="language-plaintext highlighter-rouge">def { .. }</code> record update visually.
+Haskell people really don’t like writing parentheses, so they sometimes
+use a dollar sign instead.  For us this is particularly nice, because
+now we don’t have to awkwardly write</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="p">(</span><span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span> <span class="o">=</span> <span class="n">mod4Mask</span>  <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<p>This will be especially handy when adding more combinators; something we
+will talk about later on.  The dollar sign is superfluous in this
+example, but that will change soon enough so it’s worth introducing it
+here as well.</p>
+
+<p>What if we wanted to add other keybindings?  Say you also want to bind
+<code class="language-plaintext highlighter-rouge">M-S-z</code> to lock your screen with the screensaver, <code class="language-plaintext highlighter-rouge">M-S-=</code> to take a
+snapshot of one window, and <code class="language-plaintext highlighter-rouge">M-]</code> to spawn Firefox.  This can be
+achieved with the <code class="language-plaintext highlighter-rouge">additionalKeysP</code> function from the
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> module—luckily we already have it imported!  Our
+config file, starting with <code class="language-plaintext highlighter-rouge">main</code>, now looks like:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span> <span class="o">=</span> <span class="n">mod4Mask</span>  <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">}</span>
+  <span class="p">`</span><span class="n">additionalKeysP</span><span class="p">`</span>
+    <span class="p">[</span> <span class="p">(</span><span class="s">"M-S-z"</span><span class="p">,</span> <span class="n">spawn</span> <span class="s">"xscreensaver-command -lock"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-S-="</span><span class="p">,</span> <span class="n">unGrab</span> <span class="o">*&gt;</span> <span class="n">spawn</span> <span class="s">"scrot -s"</span>        <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-]"</span>  <span class="p">,</span> <span class="n">spawn</span> <span class="s">"firefox"</span>                   <span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<p>That syntax look familiar?</p>
+
+<p>You can find the names for special keys, like <code class="language-plaintext highlighter-rouge">Print</code> or the <code class="language-plaintext highlighter-rouge">F</code>-keys,
+in the <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> documentation.</p>
+
+<p>We will cover setting up the screensaver later in this tutorial.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">unGrab</code> before running the <code class="language-plaintext highlighter-rouge">scrot -s</code> command tells xmonad to
+release its keyboard grab before <code class="language-plaintext highlighter-rouge">scrot -s</code> tries to grab the keyboard
+itself.  The little <code class="language-plaintext highlighter-rouge">*&gt;</code> operator essentially just sequences two
+functions, i.e. <code class="language-plaintext highlighter-rouge">f *&gt; g</code> says</p>
+
+<blockquote>
+  <p>first do <code class="language-plaintext highlighter-rouge">f</code> and then, discarding any result that <code class="language-plaintext highlighter-rouge">f</code> may have given
+me, do <code class="language-plaintext highlighter-rouge">g</code>.</p>
+</blockquote>
+
+<p>Do note that you may need to install <code class="language-plaintext highlighter-rouge">scrot</code> if you don’t have it on
+your system already.</p>
+
+<p>What if we wanted to augment our xmonad experience just a little more?
+We already have <code class="language-plaintext highlighter-rouge">xmonad-contrib</code>, which means endless possibilities!
+Say we want to add a three column layout to our layouts and also magnify
+focused stack windows, making it more useful on smaller screens.</p>
+
+<p>We start by visiting the documentation for <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Layout-ThreeColumns.html">XMonad.Layout.ThreeColumns</a>.
+The very first sentence of the <code class="language-plaintext highlighter-rouge">Usage</code> section tells us exactly what we
+want to start with:</p>
+
+<blockquote>
+  <p>You can use this module with the following in your <code class="language-plaintext highlighter-rouge">~/.xmonad/xmonad.hs</code>:</p>
+
+  <p><code class="language-plaintext highlighter-rouge">import XMonad.Layout.ThreeColumns</code></p>
+</blockquote>
+
+<p>Ignoring the part about where exactly our <code class="language-plaintext highlighter-rouge">xmonad.hs</code> is (we have opted
+to put it into <code class="language-plaintext highlighter-rouge">~/.config/xmonad/xmonad.hs</code>, remember?) we can follow
+that documentation word for word.  Let’s add</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad.Layout.ThreeColumns</span>
+</code></pre></div></div>
+
+<p>to the top of our configuration file.  Most modules have a lot of
+accompanying text and usage examples in them—so while the type
+signatures may seem scary, don’t be afraid to look up the
+<a href="https://hackage.haskell.org/package/xmonad-contrib">xmonad-contrib documentation</a> on hackage!</p>
+
+<p>Next we just need to tell xmonad that we want to use that particular
+layout.  To do this, there is the <code class="language-plaintext highlighter-rouge">layoutHook</code>.  Let’s use the default
+layout as a base:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myLayout</span> <span class="o">=</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Full</span>
+  <span class="kr">where</span>
+    <span class="n">tiled</span>   <span class="o">=</span> <span class="kt">Tall</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">nmaster</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1">-- Default number of windows in the master pane</span>
+    <span class="n">ratio</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>    <span class="c1">-- Default proportion of screen occupied by master pane</span>
+    <span class="n">delta</span>   <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">100</span>  <span class="c1">-- Percent of screen to increment by when resizing panes</span>
+</code></pre></div></div>
+
+<p>The so-called <code class="language-plaintext highlighter-rouge">where</code>-clause above simply consists of local declarations
+that might clutter things up where they all declared at the top-level
+like this</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myLayout</span> <span class="o">=</span> <span class="kt">Tall</span> <span class="mi">1</span> <span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="p">(</span><span class="kt">Tall</span> <span class="mi">1</span> <span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span> <span class="o">|||</span> <span class="kt">Full</span>
+</code></pre></div></div>
+
+<p>It also gives us the chance of documenting what the individual numbers
+mean!</p>
+
+<p>Now we can add the layout according to the <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Layout-ThreeColumns.html">XMonad.Layout.ThreeColumns</a>
+documentation.  At this point, we would encourage you to try this
+yourself with just the docs guiding you.  If you can’t do it, don’t
+worry; it’ll come with time!</p>
+
+<p>We can, for example, add the additional layout like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myLayout</span> <span class="o">=</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Full</span> <span class="o">|||</span> <span class="kt">ThreeColMid</span> <span class="mi">1</span> <span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+  <span class="kr">where</span>
+    <span class="n">tiled</span>   <span class="o">=</span> <span class="kt">Tall</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">nmaster</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1">-- Default number of windows in the master pane</span>
+    <span class="n">ratio</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>    <span class="c1">-- Default proportion of screen occupied by master pane</span>
+    <span class="n">delta</span>   <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">100</span>  <span class="c1">-- Percent of screen to increment by when resizing panes</span>
+</code></pre></div></div>
+
+<p>or even, because the numbers happen to line up, like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myLayout</span> <span class="o">=</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Full</span> <span class="o">|||</span> <span class="n">threeCol</span>
+  <span class="kr">where</span>
+    <span class="n">threeCol</span> <span class="o">=</span> <span class="kt">ThreeColMid</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">tiled</span>    <span class="o">=</span> <span class="kt">Tall</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">nmaster</span>  <span class="o">=</span> <span class="mi">1</span>      <span class="c1">-- Default number of windows in the master pane</span>
+    <span class="n">ratio</span>    <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>    <span class="c1">-- Default proportion of screen occupied by master pane</span>
+    <span class="n">delta</span>    <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">100</span>  <span class="c1">-- Percent of screen to increment by when resizing panes</span>
+</code></pre></div></div>
+
+<p>Now we just need to tell xmonad that we want to use this modified
+<code class="language-plaintext highlighter-rouge">layoutHook</code> instead of the default.  Again, try to reason this out for
+yourself by just looking at the documentation.  Ready?  Here we go:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span>    <span class="o">=</span> <span class="n">mod4Mask</span>  <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">,</span> <span class="n">layoutHook</span> <span class="o">=</span> <span class="n">myLayout</span>  <span class="c1">-- Use custom layouts</span>
+    <span class="p">}</span>
+  <span class="p">`</span><span class="n">additionalKeysP</span><span class="p">`</span>
+    <span class="p">[</span> <span class="p">(</span><span class="s">"M-S-z"</span><span class="p">,</span> <span class="n">spawn</span> <span class="s">"xscreensaver-command -lock"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-S-="</span><span class="p">,</span> <span class="n">unGrab</span> <span class="o">*&gt;</span> <span class="n">spawn</span> <span class="s">"scrot -s"</span>        <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-]"</span>  <span class="p">,</span> <span class="n">spawn</span> <span class="s">"firefox"</span>                   <span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<p>But we also wanted to add magnification, right?  Luckily for us, there’s
+a module for that as well!  It’s called <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Layout-Magnifier.html">XMonad.Layout.Magnifier</a>.
+Again, take a look at the documentation before reading on—see if you can
+reason out what to do by yourself.  Let’s pick the <code class="language-plaintext highlighter-rouge">magnifiercz'</code>
+modifier from the library; it magnifies a window by a given amount, but
+only if it’s a stack window.  Add it to your three column layout thusly:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myLayout</span> <span class="o">=</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Full</span> <span class="o">|||</span> <span class="n">threeCol</span>
+  <span class="kr">where</span>
+    <span class="n">threeCol</span> <span class="o">=</span> <span class="n">magnifiercz'</span> <span class="mf">1.3</span> <span class="o">$</span> <span class="kt">ThreeColMid</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">tiled</span>    <span class="o">=</span> <span class="kt">Tall</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">nmaster</span>  <span class="o">=</span> <span class="mi">1</span>      <span class="c1">-- Default number of windows in the master pane</span>
+    <span class="n">ratio</span>    <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>    <span class="c1">-- Default proportion of screen occupied by master pane</span>
+    <span class="n">delta</span>    <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">100</span>  <span class="c1">-- Percent of screen to increment by when resizing panes</span>
+</code></pre></div></div>
+
+<p>Don’t forget to import the module!</p>
+
+<p>You can think of the <code class="language-plaintext highlighter-rouge">$</code> here as putting everything into parentheses
+from the dollar to the end of the line.  If you don’t like that you can
+also write</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threeCol</span> <span class="o">=</span> <span class="n">magnifiercz'</span> <span class="mf">1.3</span> <span class="p">(</span><span class="kt">ThreeColMid</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>instead.</p>
+
+<p>That’s it!  Now we have a perfectly functioning three column layout with
+a magnified stack.  If you compare this with the starting screenshots,
+you will see that that’s exactly the behaviour we wanted to achieve!</p>
+
+<p>A last thing that’s worth knowing about are so-called “combinators”—at
+least we call them that, we can’t tell you what to do.  These are
+functions that compose with the <code class="language-plaintext highlighter-rouge">xmonad</code> function and add a lot of hooks
+and other things for you (trying to achieve a specific goal), so you
+don’t have to do all the manual work yourself.  For example, xmonad—by
+default—is only <a href="https://tronche.com/gui/x/icccm/">ICCCM</a> compliant.  Nowadays, however, a lot of programs
+(including many compositors) expect the window manager to <em>also</em> be
+<a href="https://specifications.freedesktop.org/wm-spec/wm-spec-1.3.html">EWMH</a> compliant.  So let’s save ourselves a lot of future trouble and
+add that to xmonad straight away!</p>
+
+<p>This functionality is to be found in the <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-EwmhDesktops.html">XMonad.Hooks.EwmhDesktops</a>
+module, so let’s import it:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad.Hooks.EwmhDesktops</span>
+</code></pre></div></div>
+
+<p>We might also consider using the <code class="language-plaintext highlighter-rouge">ewmhFullscreen</code> combinator.  By
+default, a “fullscreened” application is still bound by its window
+dimensions; this means that if the window occupies half of the screen
+before it was fullscreened, it will also do so afterwards.  Some people
+really like this behaviour, as applications thinking they’re in
+fullscreen mode tend to remove a lot of clutter (looking at you,
+Firefox).  However, because a lot of people explicitly do not want this
+effect (and some applications, like chromium, will misbehave and need
+some <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Util-Hacks.html">Hacks</a> to make this work), we will also add the relevant function
+to get “proper” fullscreen behaviour here.</p>
+
+<p><em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17.0</code></em>: The <code class="language-plaintext highlighter-rouge">ewmhFullscreen</code> function does
+  not exist in these versions.  Instead of it, you can try to add
+  <code class="language-plaintext highlighter-rouge">fullscreenEventHook</code> to your <code class="language-plaintext highlighter-rouge">handleEventHook</code> to achieve similar
+  functionality (how to do this is explained in the documentation of
+  <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-EwmhDesktops.html">XMonad.Hooks.EwmhDesktops</a>).</p>
+
+<p>To use the two combinators, we compose them with the <code class="language-plaintext highlighter-rouge">xmonad</code> function
+in the following way:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">ewmhFullscreen</span> <span class="o">$</span> <span class="n">ewmh</span> <span class="o">$</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span>    <span class="o">=</span> <span class="n">mod4Mask</span>  <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">,</span> <span class="n">layoutHook</span> <span class="o">=</span> <span class="n">myLayout</span>  <span class="c1">-- Use custom layouts</span>
+    <span class="p">}</span>
+  <span class="p">`</span><span class="n">additionalKeysP</span><span class="p">`</span>
+    <span class="p">[</span> <span class="p">(</span><span class="s">"M-S-z"</span><span class="p">,</span> <span class="n">spawn</span> <span class="s">"xscreensaver-command -lock"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-S-="</span><span class="p">,</span> <span class="n">unGrab</span> <span class="o">*&gt;</span> <span class="n">spawn</span> <span class="s">"scrot -s"</span>        <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-]"</span>  <span class="p">,</span> <span class="n">spawn</span> <span class="s">"firefox"</span>                   <span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<p>Do mind the order of the two combinators—by a particularly awkward set
+of circumstances, they do not commute!</p>
+
+<p>This <code class="language-plaintext highlighter-rouge">main</code> function is getting pretty crowded now, so let’s refactor it
+a little bit.  A good way to do this is to split the config part into
+one function and the “main and all the combinators” part into another.
+Let’s call the config part <code class="language-plaintext highlighter-rouge">myConfig</code> for… obvious reasons.  It would
+look like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">ewmhFullscreen</span> <span class="o">$</span> <span class="n">ewmh</span> <span class="o">$</span> <span class="n">myConfig</span>
+
+<span class="n">myConfig</span> <span class="o">=</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span>    <span class="o">=</span> <span class="n">mod4Mask</span>  <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">,</span> <span class="n">layoutHook</span> <span class="o">=</span> <span class="n">myLayout</span>  <span class="c1">-- Use custom layouts</span>
+    <span class="p">}</span>
+  <span class="p">`</span><span class="n">additionalKeysP</span><span class="p">`</span>
+    <span class="p">[</span> <span class="p">(</span><span class="s">"M-S-z"</span><span class="p">,</span> <span class="n">spawn</span> <span class="s">"xscreensaver-command -lock"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-S-="</span><span class="p">,</span> <span class="n">unGrab</span> <span class="o">*&gt;</span> <span class="n">spawn</span> <span class="s">"scrot -s"</span>        <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-]"</span>  <span class="p">,</span> <span class="n">spawn</span> <span class="s">"firefox"</span>                   <span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<p>Much better!</p>
+
+<h2 id="make-xmonad-and-xmobar-talk-to-each-other">Make XMonad and Xmobar Talk to Each Other</h2>
+
+<p>Onto the main dish.  First, we have to import the necessary modules.
+Add the following to your list of imports:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad.Hooks.DynamicLog</span>
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.StatusBar</span>
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.StatusBar.PP</span>
+</code></pre></div></div>
+
+<p><em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17.0</code></em>: The <code class="language-plaintext highlighter-rouge">XMonad.Hooks.StatusBar</code> and
+  <code class="language-plaintext highlighter-rouge">XMonad.Hooks.StatusBar.PP</code> modules don’t exist yet.  You can find
+  everything you need in the <code class="language-plaintext highlighter-rouge">XMonad.Hooks.DynamicLog</code> module, so remove
+  these two imports.</p>
+
+<p>Replace your <code class="language-plaintext highlighter-rouge">main</code> function above with:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">ewmhFullscreen</span> <span class="o">$</span> <span class="n">ewmh</span> <span class="o">$</span> <span class="n">xmobarProp</span> <span class="o">$</span> <span class="n">myConfig</span>
+</code></pre></div></div>
+
+<p><em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17.0</code></em>: The <code class="language-plaintext highlighter-rouge">xmobarProp</code> function does not
+  exist in these versions.  Instead of it, use <code class="language-plaintext highlighter-rouge">xmobar</code> via
+  <code class="language-plaintext highlighter-rouge">main = xmonad . ewmh =&lt;&lt; xmobar myConfig</code> and carefully read the part
+  about pipes later on (<code class="language-plaintext highlighter-rouge">xmobar</code> uses pipes to make xmobar talk to
+  xmonad).</p>
+
+<p>As a quick side-note, we could have also written</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">.</span> <span class="n">ewmhFullscreen</span> <span class="o">.</span> <span class="n">ewmh</span> <span class="o">.</span> <span class="n">xmobarProp</span> <span class="o">$</span> <span class="n">myConfig</span>
+</code></pre></div></div>
+
+<p>Notice how <code class="language-plaintext highlighter-rouge">$</code> became <code class="language-plaintext highlighter-rouge">.</code>!  The dot operator <code class="language-plaintext highlighter-rouge">(.)</code> in Haskell means
+function composition and is read from right to left.  What this means in
+this specific case is essentially the following:</p>
+
+<blockquote>
+  <p>take the four functions <code class="language-plaintext highlighter-rouge">xmonad</code>, <code class="language-plaintext highlighter-rouge">ewmhFullscreen</code>, <code class="language-plaintext highlighter-rouge">ewmh</code>, and
+<code class="language-plaintext highlighter-rouge">xmobarProp</code> and give me the big new function
+<code class="language-plaintext highlighter-rouge">xmonad . ewmhFullscreen . ewmh . xmobarProp</code> that first executes
+<code class="language-plaintext highlighter-rouge">xmobarProp</code>, then <code class="language-plaintext highlighter-rouge">ewmh</code>, then <code class="language-plaintext highlighter-rouge">ewmhFullscreen</code>, and finally
+<code class="language-plaintext highlighter-rouge">xmonad</code>.  Then give it <code class="language-plaintext highlighter-rouge">myConfig</code> as its argument so it can do its
+thing.</p>
+</blockquote>
+
+<p>This should strike you as nothing more than a syntactical quirk, at
+least in this case.  And indeed, since <code class="language-plaintext highlighter-rouge">($)</code> is just function
+application there is a very nice relationship between <code class="language-plaintext highlighter-rouge">(.)</code> and <code class="language-plaintext highlighter-rouge">($)</code>.
+This may be more obvious if we write everything with parentheses and
+apply the <code class="language-plaintext highlighter-rouge">(.)</code> operator (because we do have an argument):</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- ($) version</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">$</span> <span class="n">ewmhFullscreen</span> <span class="o">$</span> <span class="n">ewmh</span> <span class="o">$</span> <span class="n">xmobarProp</span> <span class="o">$</span> <span class="n">myConfig</span>
+<span class="c1">-- ($) version with parentheses</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="p">(</span><span class="n">ewmhFullscreen</span> <span class="p">(</span><span class="n">ewmh</span> <span class="p">(</span><span class="n">xmobarProp</span> <span class="p">(</span><span class="n">myConfig</span><span class="p">))))</span>
+
+<span class="c1">-- (.) version with parentheses</span>
+<span class="n">main</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmonad</span> <span class="o">.</span> <span class="n">ewmhFullscreen</span> <span class="o">.</span> <span class="n">ewmh</span> <span class="o">.</span> <span class="n">xmobarProp</span><span class="p">)</span> <span class="p">(</span><span class="n">myConfig</span><span class="p">)</span>
+<span class="c1">-- xmobarProp applied</span>
+<span class="n">main</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmonad</span> <span class="o">.</span> <span class="n">ewmhFullscreen</span> <span class="o">.</span> <span class="n">ewmh</span><span class="p">)</span> <span class="p">(</span><span class="n">xmobarProp</span> <span class="p">(</span><span class="n">myConfig</span><span class="p">))</span>
+<span class="c1">-- ewmh applied</span>
+<span class="n">main</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmonad</span> <span class="o">.</span> <span class="n">ewmhFullscreen</span><span class="p">)</span> <span class="p">(</span><span class="n">ewmh</span> <span class="p">(</span><span class="n">xmobarProp</span> <span class="p">(</span><span class="n">myConfig</span><span class="p">)))</span>
+<span class="c1">-- xmonad and ewmhFullscreen applied</span>
+<span class="n">main</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmonad</span> <span class="p">(</span><span class="n">ewmhFullscreen</span> <span class="p">(</span><span class="n">ewmh</span> <span class="p">(</span><span class="n">xmobarProp</span> <span class="p">(</span><span class="n">myConfig</span><span class="p">))))</span>
+</code></pre></div></div>
+
+<p>It’s the same!  This is special to the interplay with <code class="language-plaintext highlighter-rouge">(.)</code> and <code class="language-plaintext highlighter-rouge">($)</code>
+though; if you’re on an older version of xmonad and xmonad-contrib and
+use <code class="language-plaintext highlighter-rouge">xmobar</code> instead of <code class="language-plaintext highlighter-rouge">xmobarProp</code>, then you <em>have</em> to write</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="o">.</span> <span class="n">ewmhFullscreen</span> <span class="o">.</span> <span class="n">ewmh</span> <span class="o">=&lt;&lt;</span> <span class="n">xmobar</span> <span class="n">myConfig</span>
+</code></pre></div></div>
+
+<p>and this is <em>not</em> equivalent to</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span> <span class="p">(</span><span class="n">ewmhFullscreen</span> <span class="p">(</span><span class="n">ewmh</span> <span class="o">=&lt;&lt;</span> <span class="n">xmobar</span> <span class="n">myConfig</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Consult a Haskell book of your choice for why this is the case.</p>
+
+<p>Back to our actual goal: customizing xmonad.  What the code we’ve
+written does is take our tweaked default configuration <code class="language-plaintext highlighter-rouge">myConfig</code> and
+add the support we need to make xmobar our status bar.  Do note that you
+will also need to add the <code class="language-plaintext highlighter-rouge">XMonadLog</code> plugin to your xmobar
+configuration; we will do this together below, so don’t sweat it for
+now.</p>
+
+<p>To understand why this is necessary, let’s talk a little bit about how
+xmonad and xmobar fit together.  You can make them talk to each other in
+several different ways.</p>
+
+<p>By default, xmobar accepts input on its stdin, which it can display at
+an arbitrary position on the screen.  We want xmonad to send xmobar the
+stuff that you can see at the upper left of the starting screenshots:
+information about available workspaces, current layout, and open
+windows.  Naïvely, we can achieve this by spawning a pipe and letting
+xmonad feed the relevant information to that pipe.  The problem with
+that approach is that when the pipe is not being read and gets full,
+xmonad will freeze!</p>
+
+<p>It is thus much better to switch over to property based logging, where
+we are writing to an X11 property and having xmobar read that; no danger
+when things are not being read!  For this reason we have to use
+<code class="language-plaintext highlighter-rouge">XMonadLog</code> instead of <code class="language-plaintext highlighter-rouge">StdinReader</code> in our xmobar.  There’s also an
+<code class="language-plaintext highlighter-rouge">UnsafeXMonadLog</code> available, should you want to send actions to xmobar
+(this is useful, for example, for <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Util-ClickableWorkspaces.html">XMonad.Util.ClickableWorkspaces</a>,
+which is a new feature in <code class="language-plaintext highlighter-rouge">0.17.0</code>).</p>
+
+<p><em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17.0</code></em>: As discussed above, the <code class="language-plaintext highlighter-rouge">xmobar</code>
+  function uses pipes, so you actually do want to use the <code class="language-plaintext highlighter-rouge">StdinReader</code>.
+  Simply replace <em>all</em> occurences of <code class="language-plaintext highlighter-rouge">XMonadLog</code> with <code class="language-plaintext highlighter-rouge">StdinReader</code>
+  below (don’t forget the template!)</p>
+
+<h2 id="configuring-xmobar">Configuring Xmobar</h2>
+
+<p>Now, before this will work, we have to configure xmobar.  Here’s a nice
+starting point.  Be aware that, while Haskell syntax highlighting is
+used here to make this pretty, xmobar’s config is <em>not</em> a Haskell file
+and thus can’t execute arbitrary code—at least not by default.  If you
+do want to configure xmobar in Haskell there is a note about that at the
+end of this section.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">Config</span> <span class="p">{</span> <span class="n">overrideRedirect</span> <span class="o">=</span> <span class="kt">False</span>
+       <span class="p">,</span> <span class="n">font</span>     <span class="o">=</span> <span class="s">"xft:iosevka-9"</span>
+       <span class="p">,</span> <span class="n">bgColor</span>  <span class="o">=</span> <span class="s">"#5f5f5f"</span>
+       <span class="p">,</span> <span class="n">fgColor</span>  <span class="o">=</span> <span class="s">"#f8f8f2"</span>
+       <span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="kt">TopW</span> <span class="kt">L</span> <span class="mi">90</span>
+       <span class="p">,</span> <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span> <span class="kt">Run</span> <span class="kt">Weather</span> <span class="s">"EGPF"</span>
+                        <span class="p">[</span> <span class="s">"--template"</span><span class="p">,</span> <span class="s">"&lt;weather&gt; &lt;tempC&gt;°C"</span>
+                        <span class="p">,</span> <span class="s">"-L"</span><span class="p">,</span> <span class="s">"0"</span>
+                        <span class="p">,</span> <span class="s">"-H"</span><span class="p">,</span> <span class="s">"25"</span>
+                        <span class="p">,</span> <span class="s">"--low"</span>   <span class="p">,</span> <span class="s">"lightblue"</span>
+                        <span class="p">,</span> <span class="s">"--normal"</span><span class="p">,</span> <span class="s">"#f8f8f2"</span>
+                        <span class="p">,</span> <span class="s">"--high"</span>  <span class="p">,</span> <span class="s">"red"</span>
+                        <span class="p">]</span> <span class="mi">36000</span>
+                    <span class="p">,</span> <span class="kt">Run</span> <span class="kt">Cpu</span>
+                        <span class="p">[</span> <span class="s">"-L"</span><span class="p">,</span> <span class="s">"3"</span>
+                        <span class="p">,</span> <span class="s">"-H"</span><span class="p">,</span> <span class="s">"50"</span>
+                        <span class="p">,</span> <span class="s">"--high"</span>  <span class="p">,</span> <span class="s">"red"</span>
+                        <span class="p">,</span> <span class="s">"--normal"</span><span class="p">,</span> <span class="s">"green"</span>
+                        <span class="p">]</span> <span class="mi">10</span>
+                    <span class="p">,</span> <span class="kt">Run</span> <span class="kt">Alsa</span> <span class="s">"default"</span> <span class="s">"Master"</span>
+                        <span class="p">[</span> <span class="s">"--template"</span><span class="p">,</span> <span class="s">"&lt;volumestatus&gt;"</span>
+                        <span class="p">,</span> <span class="s">"--suffix"</span>  <span class="p">,</span> <span class="s">"True"</span>
+                        <span class="p">,</span> <span class="s">"--"</span>
+                        <span class="p">,</span> <span class="s">"--on"</span><span class="p">,</span> <span class="s">""</span>
+                        <span class="p">]</span>
+                    <span class="p">,</span> <span class="kt">Run</span> <span class="kt">Memory</span> <span class="p">[</span><span class="s">"--template"</span><span class="p">,</span> <span class="s">"Mem: &lt;usedratio&gt;%"</span><span class="p">]</span> <span class="mi">10</span>
+                    <span class="p">,</span> <span class="kt">Run</span> <span class="kt">Swap</span> <span class="kt">[]</span> <span class="mi">10</span>
+                    <span class="p">,</span> <span class="kt">Run</span> <span class="kt">Date</span> <span class="s">"%a %Y-%m-%d &lt;fc=#8be9fd&gt;%H:%M&lt;/fc&gt;"</span> <span class="s">"date"</span> <span class="mi">10</span>
+                    <span class="p">,</span> <span class="kt">Run</span> <span class="kt">XMonadLog</span>
+                    <span class="p">]</span>
+       <span class="p">,</span> <span class="n">sepChar</span>  <span class="o">=</span> <span class="s">"%"</span>
+       <span class="p">,</span> <span class="n">alignSep</span> <span class="o">=</span> <span class="s">"}{"</span>
+       <span class="p">,</span> <span class="n">template</span> <span class="o">=</span> <span class="s">"%XMonadLog% }{ %alsa:default:Master% | %cpu% | %memory% * %swap% | %EGPF% | %date% "</span>
+       <span class="p">}</span>
+</code></pre></div></div>
+
+<p>First, we set the font to use for the bar, as well as the colors.  The
+position options are documented well on the <a href="https://xmobar.org/">xmobar home page</a> or,
+alternatively, in the <a href="https://github.com/jaor/xmobar/blob/master/doc/quick-start.org#configuration-options">quick-start.org</a> on GitHub.  The particular
+option of <code class="language-plaintext highlighter-rouge">TopW L 90</code> says to put the bar in the upper left of the
+screen, and make it consume 90% of the width of the screen (we need to
+leave a little bit of space for <code class="language-plaintext highlighter-rouge">trayer-srg</code>).  If you’re up for it—and
+this really requires more shell-scripting than Haskell knowledge—you can
+also try to seamlessly embed trayer into xmobar by using
+<a href="https://github.com/jaor/xmobar/issues/239#issuecomment-233206552">trayer-padding-icon.sh</a> and following the advice given in that thread.</p>
+
+<p>In the commands list you, well, define commands.  Commands are the
+pieces that generate the content to be displayed in your bar.  These
+will later be combined together in the <code class="language-plaintext highlighter-rouge">template</code>.  Here, we have
+defined a weather widget, a CPU widget, memory and swap widgets, a date,
+a volume indicator, and of course the data from xmonad via <code class="language-plaintext highlighter-rouge">XMonadLog</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">EGPF</code> in the weather command is a particular station.  Replace both
+(!) occurences of it with your choice of ICAO weather stations.  For a
+list of ICAO codes you can visit the relevant <a href="https://en.wikipedia.org/wiki/ICAO_airport_code#Prefixes">Wikipedia page</a>.  You can
+of course monitor more than one if you like; see xmobar’s <a href="https://github.com/jaor/xmobar/blob/master/doc/plugins.org#weather-monitors">weather
+monitor</a> documentation for further details.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">template</code> then combines everything together.  The <code class="language-plaintext highlighter-rouge">alignSep</code>
+variable controls the alignment of all of the monitors.  Stuff to be
+left-justified goes before the <code class="language-plaintext highlighter-rouge">}</code> character, things to be centered
+after it, and things to be right justified after <code class="language-plaintext highlighter-rouge">{</code>.  We have nothing
+centered so there is nothing in-between them.</p>
+
+<p>Save the file to <code class="language-plaintext highlighter-rouge">~/.xmobarrc</code>.  Now press <code class="language-plaintext highlighter-rouge">M-q</code> to reload xmonad; you
+should now see xmobar with your new configuration!  Please note that, at
+this point, the config <em>has</em> to reside in <code class="language-plaintext highlighter-rouge">~/.xmobarrc</code>.  We will,
+however, discuss how to change this soon.</p>
+
+<p>It is also possible to completely configure xmobar in Haskell, just like
+xmonad.  If you want to know more about that, you can check out the
+<a href="https://github.com/jaor/xmobar/blob/master/examples/xmobar.hs">xmobar.hs</a> example in the official documentation.  For a more
+complicated example, you can also check out <a href="https://codeberg.org/jao/xmobar-config">jao’s xmobar.hs</a> (he’s the
+current maintainer of xmobar).</p>
+
+<h2 id="changing-what-xmonad-sends-to-xmobar">Changing What XMonad Sends to Xmobar</h2>
+
+<p>Now that the xmobar side of the picture looks nice, what about the stuff
+that xmonad sends to xmobar?  It would be nice to visually match these
+two.  Sadly, this is not quite possible with our <code class="language-plaintext highlighter-rouge">xmobarProp</code> function;
+however, looking at the implementation of the function (or, indeed, the
+top-level documentation of the module!) should give us some ideas for
+how to proceed:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xmobarProp</span> <span class="n">config</span> <span class="o">=</span>
+  <span class="n">withEasySB</span> <span class="p">(</span><span class="n">statusBarProp</span> <span class="s">"xmobar"</span> <span class="p">(</span><span class="n">pure</span> <span class="n">xmobarPP</span><span class="p">))</span> <span class="n">toggleStrutsKey</span> <span class="n">config</span>
+</code></pre></div></div>
+
+<p>This means that <code class="language-plaintext highlighter-rouge">xmobarProp</code> just calls the functions <code class="language-plaintext highlighter-rouge">withEasySB</code> and
+<code class="language-plaintext highlighter-rouge">statusBarProp</code> with some arguments; crucially for us, notice the
+<code class="language-plaintext highlighter-rouge">xmobarPP</code>.  In this context “PP” stands for “pretty-printer”—exactly
+what we want to modify!</p>
+
+<p>Let’s copy the implementation over into our main function:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span>
+     <span class="o">.</span> <span class="n">ewmhFullscreen</span>
+     <span class="o">.</span> <span class="n">ewmh</span>
+     <span class="o">.</span> <span class="n">withEasySB</span> <span class="p">(</span><span class="n">statusBarProp</span> <span class="s">"xmobar"</span> <span class="p">(</span><span class="n">pure</span> <span class="n">def</span><span class="p">))</span> <span class="n">defToggleStrutsKey</span>
+     <span class="o">$</span> <span class="n">myConfig</span>
+</code></pre></div></div>
+
+<p><em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17.0</code></em>: <code class="language-plaintext highlighter-rouge">xmobar</code> has a similar definition,
+  relying on <code class="language-plaintext highlighter-rouge">statusBar</code> alone: <code class="language-plaintext highlighter-rouge">xmobar = statusBar "xmobar" xmobarPP
+    toggleStrutsKey</code>.  Sadly, the <code class="language-plaintext highlighter-rouge">defToggleStrutsKey</code> function is not yet
+  exported, so you will have to define it yourself:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span>
+     <span class="o">.</span> <span class="n">ewmhFullscreen</span>
+     <span class="o">.</span> <span class="n">ewmh</span>
+   <span class="o">=&lt;&lt;</span> <span class="n">statusBar</span> <span class="s">"xmobar"</span> <span class="n">def</span> <span class="n">toggleStrutsKey</span> <span class="n">myConfig</span>
+  <span class="kr">where</span>
+    <span class="n">toggleStrutsKey</span> <span class="o">::</span> <span class="kt">XConfig</span> <span class="kt">Layout</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">KeyMask</span><span class="p">,</span> <span class="kt">KeySym</span><span class="p">)</span>
+    <span class="n">toggleStrutsKey</span> <span class="kt">XConfig</span><span class="p">{</span> <span class="n">modMask</span> <span class="o">=</span> <span class="n">m</span> <span class="p">}</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">xK_b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">defToggleStrutsKey</code> here is just the key with which you can toggle
+the bar; it is bound to <code class="language-plaintext highlighter-rouge">M-b</code>.  If you want to change this, you can also
+define your own:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span>
+     <span class="o">.</span> <span class="n">ewmhFullscreen</span>
+     <span class="o">.</span> <span class="n">ewmh</span>
+     <span class="o">.</span> <span class="n">withEasySB</span> <span class="p">(</span><span class="n">statusBarProp</span> <span class="s">"xmobar"</span> <span class="p">(</span><span class="n">pure</span> <span class="n">def</span><span class="p">))</span> <span class="n">toggleStrutsKey</span>
+     <span class="o">$</span> <span class="n">myConfig</span>
+  <span class="kr">where</span>
+    <span class="n">toggleStrutsKey</span> <span class="o">::</span> <span class="kt">XConfig</span> <span class="kt">Layout</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">KeyMask</span><span class="p">,</span> <span class="kt">KeySym</span><span class="p">)</span>
+    <span class="n">toggleStrutsKey</span> <span class="kt">XConfig</span><span class="p">{</span> <span class="n">modMask</span> <span class="o">=</span> <span class="n">m</span> <span class="p">}</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">xK_b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Feel free to change the binding by modifying the <code class="language-plaintext highlighter-rouge">(m, xK_b)</code> tuple to
+your liking.</p>
+
+<p>If you want your xmobar configuration file to reside somewhere else than
+<code class="language-plaintext highlighter-rouge">~/.xmobarrc</code>, you can now simply give the file to xmobar as a
+positional argument!  For example:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span>
+     <span class="o">.</span> <span class="n">ewmhFullscreen</span>
+     <span class="o">.</span> <span class="n">ewmh</span>
+     <span class="o">.</span> <span class="n">withEasySB</span> <span class="p">(</span><span class="n">statusBarProp</span> <span class="s">"xmobar ~/.config/xmobar/xmobarrc"</span> <span class="p">(</span><span class="n">pure</span> <span class="n">def</span><span class="p">))</span> <span class="n">defToggleStrutsKey</span>
+     <span class="o">$</span> <span class="n">myConfig</span>
+</code></pre></div></div>
+
+<p>Back to controlling what exactly we send to xmobar.  The <code class="language-plaintext highlighter-rouge">def</code>
+pretty-printer just gives us the same result that the internal
+<code class="language-plaintext highlighter-rouge">xmobarPP</code> would have given us.  Let’s try to build something on top of
+this.  To prepare, we can first create a new function <code class="language-plaintext highlighter-rouge">myXmobarPP</code> with
+the default configuration:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myXmobarPP</span> <span class="o">::</span> <span class="kt">PP</span>
+<span class="n">myXmobarPP</span> <span class="o">=</span> <span class="n">def</span>
+</code></pre></div></div>
+
+<p>and then plug that into our main function:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span>
+     <span class="o">.</span> <span class="n">ewmhFullscreen</span>
+     <span class="o">.</span> <span class="n">ewmh</span>
+     <span class="o">.</span> <span class="n">withEasySB</span> <span class="p">(</span><span class="n">statusBarProp</span> <span class="s">"xmobar"</span> <span class="p">(</span><span class="n">pure</span> <span class="n">myXmobarPP</span><span class="p">))</span> <span class="n">defToggleStrutsKey</span>
+     <span class="o">$</span> <span class="n">myConfig</span>
+</code></pre></div></div>
+
+<p>As before, we now change things by modifying that <code class="language-plaintext highlighter-rouge">def</code> record until we
+find something that we like.  First, for some functionality that we need
+further down we need to import one more module:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad.Util.Loggers</span>
+</code></pre></div></div>
+
+<p>Now we are finally ready to make things pretty.  There are <em>a lot</em> of
+options for the <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-DynamicLog.html#t:PP">PP record</a>; I’d advise you to read through all of them
+now, so you don’t get lost!</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myXmobarPP</span> <span class="o">::</span> <span class="kt">PP</span>
+<span class="n">myXmobarPP</span> <span class="o">=</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">ppSep</span>             <span class="o">=</span> <span class="n">magenta</span> <span class="s">" • "</span>
+    <span class="p">,</span> <span class="n">ppTitleSanitize</span>   <span class="o">=</span> <span class="n">xmobarStrip</span>
+    <span class="p">,</span> <span class="n">ppCurrent</span>         <span class="o">=</span> <span class="n">wrap</span> <span class="s">" "</span> <span class="s">""</span> <span class="o">.</span> <span class="n">xmobarBorder</span> <span class="s">"Top"</span> <span class="s">"#8be9fd"</span> <span class="mi">2</span>
+    <span class="p">,</span> <span class="n">ppHidden</span>          <span class="o">=</span> <span class="n">white</span> <span class="o">.</span> <span class="n">wrap</span> <span class="s">" "</span> <span class="s">""</span>
+    <span class="p">,</span> <span class="n">ppHiddenNoWindows</span> <span class="o">=</span> <span class="n">lowWhite</span> <span class="o">.</span> <span class="n">wrap</span> <span class="s">" "</span> <span class="s">""</span>
+    <span class="p">,</span> <span class="n">ppUrgent</span>          <span class="o">=</span> <span class="n">red</span> <span class="o">.</span> <span class="n">wrap</span> <span class="p">(</span><span class="n">yellow</span> <span class="s">"!"</span><span class="p">)</span> <span class="p">(</span><span class="n">yellow</span> <span class="s">"!"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">ppOrder</span>           <span class="o">=</span> <span class="nf">\</span><span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="kr">_</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">ppExtras</span>          <span class="o">=</span> <span class="p">[</span><span class="n">logTitles</span> <span class="n">formatFocused</span> <span class="n">formatUnfocused</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="kr">where</span>
+    <span class="n">formatFocused</span>   <span class="o">=</span> <span class="n">wrap</span> <span class="p">(</span><span class="n">white</span>    <span class="s">"["</span><span class="p">)</span> <span class="p">(</span><span class="n">white</span>    <span class="s">"]"</span><span class="p">)</span> <span class="o">.</span> <span class="n">magenta</span> <span class="o">.</span> <span class="n">ppWindow</span>
+    <span class="n">formatUnfocused</span> <span class="o">=</span> <span class="n">wrap</span> <span class="p">(</span><span class="n">lowWhite</span> <span class="s">"["</span><span class="p">)</span> <span class="p">(</span><span class="n">lowWhite</span> <span class="s">"]"</span><span class="p">)</span> <span class="o">.</span> <span class="n">blue</span>    <span class="o">.</span> <span class="n">ppWindow</span>
+
+    <span class="c1">-- | Windows should have *some* title, which should not not exceed a</span>
+    <span class="c1">-- sane length.</span>
+    <span class="n">ppWindow</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+    <span class="n">ppWindow</span> <span class="o">=</span> <span class="n">xmobarRaw</span> <span class="o">.</span> <span class="p">(</span><span class="nf">\</span><span class="n">w</span> <span class="o">-&gt;</span> <span class="kr">if</span> <span class="n">null</span> <span class="n">w</span> <span class="kr">then</span> <span class="s">"untitled"</span> <span class="kr">else</span> <span class="n">w</span><span class="p">)</span> <span class="o">.</span> <span class="n">shorten</span> <span class="mi">30</span>
+
+    <span class="n">blue</span><span class="p">,</span> <span class="n">lowWhite</span><span class="p">,</span> <span class="n">magenta</span><span class="p">,</span> <span class="n">red</span><span class="p">,</span> <span class="n">white</span><span class="p">,</span> <span class="n">yellow</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+    <span class="n">magenta</span>  <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#ff79c6"</span> <span class="s">""</span>
+    <span class="n">blue</span>     <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#bd93f9"</span> <span class="s">""</span>
+    <span class="n">white</span>    <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#f8f8f2"</span> <span class="s">""</span>
+    <span class="n">yellow</span>   <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#f1fa8c"</span> <span class="s">""</span>
+    <span class="n">red</span>      <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#ff5555"</span> <span class="s">""</span>
+    <span class="n">lowWhite</span> <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#bbbbbb"</span> <span class="s">""</span>
+</code></pre></div></div>
+
+<p><em>IF YOU ARE ON A VERSION <code class="language-plaintext highlighter-rouge">&lt; 0.17</code></em>: Both <code class="language-plaintext highlighter-rouge">logTitles</code> and <code class="language-plaintext highlighter-rouge">xmobarBorder</code>
+  are not available yet, so you will have to remove them.  As an
+  alternative to <code class="language-plaintext highlighter-rouge">xmobarBorder</code>, a common way to “mark” the currently
+  focused workspace is by using brackets; you can try something like
+  <code class="language-plaintext highlighter-rouge">ppCurrent = wrap (blue "[") (blue "]")</code> and see if you like it.  Also
+  read the bit about <code class="language-plaintext highlighter-rouge">ppOrder</code> further down!</p>
+
+<p>That’s a lot!  But don’t worry, take a deep breath and remind yourself
+of what you read above in the documentation of the <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-DynamicLog.html#t:PP">PP record</a>.  Even if
+you haven’t read the documentation yet, most of the fields should be
+pretty self-explanatory; <code class="language-plaintext highlighter-rouge">ppTitle</code> formats the title of the currently
+focused window, <code class="language-plaintext highlighter-rouge">ppCurrent</code> formats the currently focused workspace,
+<code class="language-plaintext highlighter-rouge">ppHidden</code> is for the hidden workspaces that have windows on them, etc.
+The rest is just deciding on some pretty colours and formatting things
+just how we like it.</p>
+
+<p>An important thing to talk about may be <code class="language-plaintext highlighter-rouge">ppOrder</code>.  Quoting from its
+documentation:</p>
+
+<blockquote>
+  <p>By default, this function receives a list with three formatted
+strings, representing the workspaces, the layout, and the current
+window title, respectively. If you have specified any extra loggers
+in ppExtras, their output will also be appended to the list.</p>
+</blockquote>
+
+<p>So the first three argument of the list (<code class="language-plaintext highlighter-rouge">ws</code>, <code class="language-plaintext highlighter-rouge">l</code>, and <code class="language-plaintext highlighter-rouge">_</code> in our case,
+where the <code class="language-plaintext highlighter-rouge">_</code> just means we want to ignore that argument and not give it
+a name) are the workspaces to show, the currently active layout, and the
+title of the focused window.  The last element—<code class="language-plaintext highlighter-rouge">wins</code>—is what we gave to
+<code class="language-plaintext highlighter-rouge">ppExtras</code>; if you added more loggers to that then you would have to add
+more items to the list, like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ppOrder</span> <span class="o">=</span> <span class="nf">\</span><span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="kr">_</span><span class="p">,</span> <span class="n">wins</span><span class="p">,</span> <span class="n">more</span><span class="p">,</span> <span class="n">more2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">wins</span><span class="p">,</span> <span class="n">more</span><span class="p">,</span> <span class="n">more2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>However, many people want to show <em>all</em> window titles on the currently
+focused workspace instead.  For that, one can use <code class="language-plaintext highlighter-rouge">logTitles</code> from
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Util-Loggers.html">XMonad.Util.Loggers</a> (remember that module we just imported?).
+However, <code class="language-plaintext highlighter-rouge">logTitles</code> logs <em>all</em> titles.  Naturally, we don’t want to
+show the focused window twice and so we suppress it here by ignoring the
+third argument of <code class="language-plaintext highlighter-rouge">ppOrder</code> and not returning it.  The functions
+<code class="language-plaintext highlighter-rouge">formatFocused</code> and <code class="language-plaintext highlighter-rouge">formatUnfocused</code> should be relatively self
+explanitory—they decide how to format the focused resp. unfocused
+windows.</p>
+
+<p>By the way, the <code class="language-plaintext highlighter-rouge">\ ... -&gt;</code> syntax in there is Haskell’s way to express a
+<a href="https://wiki.haskell.org/Lambda_abstraction">lambda abstraction</a> (or anonymous function, as some languages call it).
+All of the arguments of the function come directly after the <code class="language-plaintext highlighter-rouge">\</code> and
+before the <code class="language-plaintext highlighter-rouge">-&gt;</code>; in our case, this is a list with exactly four elements
+in it.  Basically, it’s a nice way to write a function inline and not
+having to define it inside e.g. a <code class="language-plaintext highlighter-rouge">where</code> clause.  The above could have
+also be written as</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myXmobarPP</span> <span class="o">::</span> <span class="kt">PP</span>
+<span class="n">myXmobarPP</span> <span class="o">=</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="c1">-- stuff here</span>
+    <span class="p">,</span> <span class="n">ppOrder</span> <span class="o">=</span> <span class="n">myOrder</span>
+      <span class="c1">-- more stuff here</span>
+    <span class="p">}</span>
+  <span class="kr">where</span>
+    <span class="n">myOrder</span> <span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="kr">_</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span>
+    <span class="c1">-- more stuff here</span>
+</code></pre></div></div>
+
+<p>If you’re unsure of the number of elements that your <code class="language-plaintext highlighter-rouge">ppOrder</code> will
+take, you can also specify the list like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ppOrder</span> <span class="o">=</span> <span class="nf">\</span><span class="p">(</span><span class="n">ws</span> <span class="o">:</span> <span class="n">l</span> <span class="o">:</span> <span class="kr">_</span> <span class="o">:</span> <span class="n">wins</span> <span class="o">:</span> <span class="kr">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>This says that it is a list of <em>at least</em> four elements (<code class="language-plaintext highlighter-rouge">ws</code>, <code class="language-plaintext highlighter-rouge">l</code>, the
+unnamed argument, and <code class="language-plaintext highlighter-rouge">wins</code>), but that afterwards everything is
+possible.</p>
+
+<p>This config is really quite complicated.  If this is too much for you,
+you can also really just start with the blank</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myXmobarPP</span> <span class="o">::</span> <span class="kt">PP</span>
+<span class="n">myXmobarPP</span> <span class="o">=</span> <span class="n">def</span>
+</code></pre></div></div>
+
+<p>then add something, reload xmonad, see how things change and whether you
+like them.  If not, remove that part and try something else.  If you do,
+try to understand how that particular piece of code works.  You’ll have
+something approaching the above that you fully understand in no time!</p>
+
+<h2 id="configuring-related-utilities">Configuring Related Utilities</h2>
+
+<p>So now you’ve got a status bar and xmonad.  We still need a few more
+things: a screensaver, a tray for our apps that have tray icons, a way
+to set our desktop background, and the like.</p>
+
+<p>For this, we will need a few pieces of software.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>trayer xscreensaver
+</code></pre></div></div>
+
+<p>If you want a network applet, something to set your desktop background,
+and a power-manager:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>nm-applet feh xfce4-power-manager
+</code></pre></div></div>
+
+<p>First, configure xscreensaver how you like it with the
+<code class="language-plaintext highlighter-rouge">xscreensaver-demo</code> command.  Now, we will set these things up in
+<code class="language-plaintext highlighter-rouge">~/.xinitrc</code> (we could also do most of this in xmonad’s <code class="language-plaintext highlighter-rouge">startupHook</code>,
+but <code class="language-plaintext highlighter-rouge">~/.xinitrc</code> is perhaps more standard).  If you want to use xmonad
+with a desktop environment, see <a href="https://wiki.haskell.org/Xmonad/Basic_Desktop_Environment_Integration">Basic Desktop Environment Integration</a>
+for how to do this.</p>
+
+<p>Your <code class="language-plaintext highlighter-rouge">~/.xinitrc</code> may wind up looking like this:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<span class="c"># [... default stuff that your distro may throw in here ...] #</span>
+
+<span class="c"># Set up an icon tray</span>
+trayer <span class="nt">--edge</span> top <span class="nt">--align</span> right <span class="nt">--SetDockType</span> <span class="nb">true</span> <span class="nt">--SetPartialStrut</span> <span class="nb">true</span> <span class="se">\</span>
+ <span class="nt">--expand</span> <span class="nb">true</span> <span class="nt">--width</span> 10 <span class="nt">--transparent</span> <span class="nb">true</span> <span class="nt">--tint</span> 0x5f5f5f <span class="nt">--height</span> 18 &amp;
+
+<span class="c"># Set the default X cursor to the usual pointer</span>
+xsetroot <span class="nt">-cursor_name</span> left_ptr
+
+<span class="c"># Set a nice background</span>
+feh <span class="nt">--bg-fill</span> <span class="nt">--no-fehbg</span> ~/.wallpapers/haskell-red-noise.png
+
+<span class="c"># Fire up screensaver</span>
+xscreensaver <span class="nt">-no-splash</span> &amp;
+
+<span class="c"># Power Management</span>
+xfce4-power-manager &amp;
+
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-x</span> /usr/bin/nm-applet <span class="o">]</span> <span class="p">;</span> <span class="k">then
+   </span>nm-applet <span class="nt">--sm-disable</span> &amp;
+<span class="k">fi
+
+</span><span class="nb">exec </span>xmonad
+</code></pre></div></div>
+
+<p>Notice the call to <code class="language-plaintext highlighter-rouge">trayer</code> above.  The options tell it to go on the top
+right, with a default width of 10% of the screen (to nicely match up
+with xmobar, which we set to a width of 90% of the screen).  We give it
+a color and a height.</p>
+
+<p>Then we fire up the rest of the programs that interest us.</p>
+
+<p>Finally, we start xmonad.</p>
+
+<p><img alt="blank desktop" src="https://user-images.githubusercontent.com/50166980/111529498-84d49080-8762-11eb-9e81-c15dd844b0a9.png" width="660" /></p>
+
+<p>Mission accomplished!</p>
+
+<p>Of course substitute the wallpaper for one of your own.  If you like the
+one used above, you can find it <a href="https://i.imgur.com/9MQHuZx.png">here</a>.</p>
+
+<h2 id="final-touches">Final Touches</h2>
+
+<p>There may be some programs that you don’t want xmonad to tile.  The
+classic example here is the <a href="https://www.gimp.org/">GNU Image Manipulation Program</a>; it pops up
+all sorts of new windows all the time, and they work best at defined
+sizes.  It makes sense for xmonad to float these kinds of windows by
+default.</p>
+
+<p>This kind of behaviour can be achieved via the <code class="language-plaintext highlighter-rouge">manageHook</code>, which runs
+when windows are created.  There are several functions to help you match
+on a certain window in <a href="https://xmonad.github.io/xmonad-docs/xmonad/XMonad-ManageHook.html">XMonad.ManageHook</a>.  For example, suppose we’d
+want to match on the class name of the application.  With the
+application open, open another terminal and invoke the <code class="language-plaintext highlighter-rouge">xprop</code> command.
+Then click on the application that you would like to know the properties
+of.  In our case you should see (among other things)</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WM_CLASS<span class="o">(</span>STRING<span class="o">)</span> <span class="o">=</span> <span class="s2">"gimp"</span>, <span class="s2">"Gimp"</span>
+</code></pre></div></div>
+
+<p>The second string in <code class="language-plaintext highlighter-rouge">WM_CLASS</code> is the class name, which we can access
+with <code class="language-plaintext highlighter-rouge">className</code> from <a href="https://xmonad.github.io/xmonad-docs/xmonad/XMonad-ManageHook.html">XMonad.ManageHook</a>.  The first one is usually
+called the instance name and is matched-on via <code class="language-plaintext highlighter-rouge">appName</code> from the same
+module.</p>
+
+<p>Let’s use the class name for now.  We can tell all windows with that
+class name to float by defining the following manageHook:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myManageHook</span> <span class="o">=</span> <span class="p">(</span><span class="n">className</span> <span class="o">=?</span> <span class="s">"Gimp"</span> <span class="o">--&gt;</span> <span class="n">doFloat</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Say we also want to float all dialogs.  This is easy with the <code class="language-plaintext highlighter-rouge">isDialog</code>
+function from <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-ManageHelpers.html">XMonad.Hooks.ManageHelpers</a> (which you should import) and
+a little modification to the <code class="language-plaintext highlighter-rouge">myManageHook</code> function:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myManageHook</span> <span class="o">::</span> <span class="kt">ManageHook</span>
+<span class="n">myManageHook</span> <span class="o">=</span> <span class="n">composeAll</span>
+    <span class="p">[</span> <span class="n">className</span> <span class="o">=?</span> <span class="s">"Gimp"</span> <span class="o">--&gt;</span> <span class="n">doFloat</span>
+    <span class="p">,</span> <span class="n">isDialog</span>            <span class="o">--&gt;</span> <span class="n">doFloat</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<p>Now we just need to tell xmonad to actually use our manageHook.  This is
+as easy as overriding the <code class="language-plaintext highlighter-rouge">manageHook</code> field in <code class="language-plaintext highlighter-rouge">myConfig</code>.  You can do
+it like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myConfig</span> <span class="o">=</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span>    <span class="o">=</span> <span class="n">mod4Mask</span>      <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">,</span> <span class="n">layoutHook</span> <span class="o">=</span> <span class="n">myLayout</span>      <span class="c1">-- Use custom layouts</span>
+    <span class="p">,</span> <span class="n">manageHook</span> <span class="o">=</span> <span class="n">myManageHook</span>  <span class="c1">-- Match on certain windows</span>
+    <span class="p">}</span>
+  <span class="p">`</span><span class="n">additionalKeysP</span><span class="p">`</span>
+    <span class="p">[</span> <span class="p">(</span><span class="s">"M-S-z"</span><span class="p">,</span> <span class="n">spawn</span> <span class="s">"xscreensaver-command -lock"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-S-="</span><span class="p">,</span> <span class="n">unGrab</span> <span class="o">*&gt;</span> <span class="n">spawn</span> <span class="s">"scrot -s"</span>        <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-]"</span>  <span class="p">,</span> <span class="n">spawn</span> <span class="s">"firefox"</span>                   <span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="the-whole-thing">The Whole Thing</h2>
+
+<p>The full <code class="language-plaintext highlighter-rouge">~/.config/xmonad/xmonad.hs</code>, in all its glory, now looks like
+this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="nn">XMonad</span>
+
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.DynamicLog</span>
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.ManageDocks</span>
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.ManageHelpers</span>
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.StatusBar</span>
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.StatusBar.PP</span>
+
+<span class="kr">import</span> <span class="nn">XMonad.Util.EZConfig</span>
+<span class="kr">import</span> <span class="nn">XMonad.Util.Loggers</span>
+<span class="kr">import</span> <span class="nn">XMonad.Util.Ungrab</span>
+
+<span class="kr">import</span> <span class="nn">XMonad.Layout.Magnifier</span>
+<span class="kr">import</span> <span class="nn">XMonad.Layout.ThreeColumns</span>
+
+<span class="kr">import</span> <span class="nn">XMonad.Hooks.EwmhDesktops</span>
+
+
+<span class="n">main</span> <span class="o">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">xmonad</span>
+     <span class="o">.</span> <span class="n">ewmhFullscreen</span>
+     <span class="o">.</span> <span class="n">ewmh</span>
+     <span class="o">.</span> <span class="n">withEasySB</span> <span class="p">(</span><span class="n">statusBarProp</span> <span class="s">"xmobar"</span> <span class="p">(</span><span class="n">pure</span> <span class="n">myXmobarPP</span><span class="p">))</span> <span class="n">defToggleStrutsKey</span>
+     <span class="o">$</span> <span class="n">myConfig</span>
+
+<span class="n">myConfig</span> <span class="o">=</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">modMask</span>    <span class="o">=</span> <span class="n">mod4Mask</span>      <span class="c1">-- Rebind Mod to the Super key</span>
+    <span class="p">,</span> <span class="n">layoutHook</span> <span class="o">=</span> <span class="n">myLayout</span>      <span class="c1">-- Use custom layouts</span>
+    <span class="p">,</span> <span class="n">manageHook</span> <span class="o">=</span> <span class="n">myManageHook</span>  <span class="c1">-- Match on certain windows</span>
+    <span class="p">}</span>
+  <span class="p">`</span><span class="n">additionalKeysP</span><span class="p">`</span>
+    <span class="p">[</span> <span class="p">(</span><span class="s">"M-S-z"</span><span class="p">,</span> <span class="n">spawn</span> <span class="s">"xscreensaver-command -lock"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-S-="</span><span class="p">,</span> <span class="n">unGrab</span> <span class="o">*&gt;</span> <span class="n">spawn</span> <span class="s">"scrot -s"</span>        <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s">"M-]"</span>  <span class="p">,</span> <span class="n">spawn</span> <span class="s">"firefox"</span>                   <span class="p">)</span>
+    <span class="p">]</span>
+
+<span class="n">myManageHook</span> <span class="o">::</span> <span class="kt">ManageHook</span>
+<span class="n">myManageHook</span> <span class="o">=</span> <span class="n">composeAll</span>
+    <span class="p">[</span> <span class="n">className</span> <span class="o">=?</span> <span class="s">"Gimp"</span> <span class="o">--&gt;</span> <span class="n">doFloat</span>
+    <span class="p">,</span> <span class="n">isDialog</span>            <span class="o">--&gt;</span> <span class="n">doFloat</span>
+    <span class="p">]</span>
+
+<span class="n">myLayout</span> <span class="o">=</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Full</span> <span class="o">|||</span> <span class="n">threeCol</span>
+  <span class="kr">where</span>
+    <span class="n">threeCol</span> <span class="o">=</span> <span class="n">magnifiercz'</span> <span class="mf">1.3</span> <span class="o">$</span> <span class="kt">ThreeColMid</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">tiled</span>    <span class="o">=</span> <span class="kt">Tall</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">nmaster</span>  <span class="o">=</span> <span class="mi">1</span>      <span class="c1">-- Default number of windows in the master pane</span>
+    <span class="n">ratio</span>    <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>    <span class="c1">-- Default proportion of screen occupied by master pane</span>
+    <span class="n">delta</span>    <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">100</span>  <span class="c1">-- Percent of screen to increment by when resizing panes</span>
+
+<span class="n">myXmobarPP</span> <span class="o">::</span> <span class="kt">PP</span>
+<span class="n">myXmobarPP</span> <span class="o">=</span> <span class="n">def</span>
+    <span class="p">{</span> <span class="n">ppSep</span>             <span class="o">=</span> <span class="n">magenta</span> <span class="s">" • "</span>
+    <span class="p">,</span> <span class="n">ppTitleSanitize</span>   <span class="o">=</span> <span class="n">xmobarStrip</span>
+    <span class="p">,</span> <span class="n">ppCurrent</span>         <span class="o">=</span> <span class="n">wrap</span> <span class="s">" "</span> <span class="s">""</span> <span class="o">.</span> <span class="n">xmobarBorder</span> <span class="s">"Top"</span> <span class="s">"#8be9fd"</span> <span class="mi">2</span>
+    <span class="p">,</span> <span class="n">ppHidden</span>          <span class="o">=</span> <span class="n">white</span> <span class="o">.</span> <span class="n">wrap</span> <span class="s">" "</span> <span class="s">""</span>
+    <span class="p">,</span> <span class="n">ppHiddenNoWindows</span> <span class="o">=</span> <span class="n">lowWhite</span> <span class="o">.</span> <span class="n">wrap</span> <span class="s">" "</span> <span class="s">""</span>
+    <span class="p">,</span> <span class="n">ppUrgent</span>          <span class="o">=</span> <span class="n">red</span> <span class="o">.</span> <span class="n">wrap</span> <span class="p">(</span><span class="n">yellow</span> <span class="s">"!"</span><span class="p">)</span> <span class="p">(</span><span class="n">yellow</span> <span class="s">"!"</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">ppOrder</span>           <span class="o">=</span> <span class="nf">\</span><span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="kr">_</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ws</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">wins</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">ppExtras</span>          <span class="o">=</span> <span class="p">[</span><span class="n">logTitles</span> <span class="n">formatFocused</span> <span class="n">formatUnfocused</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="kr">where</span>
+    <span class="n">formatFocused</span>   <span class="o">=</span> <span class="n">wrap</span> <span class="p">(</span><span class="n">white</span>    <span class="s">"["</span><span class="p">)</span> <span class="p">(</span><span class="n">white</span>    <span class="s">"]"</span><span class="p">)</span> <span class="o">.</span> <span class="n">magenta</span> <span class="o">.</span> <span class="n">ppWindow</span>
+    <span class="n">formatUnfocused</span> <span class="o">=</span> <span class="n">wrap</span> <span class="p">(</span><span class="n">lowWhite</span> <span class="s">"["</span><span class="p">)</span> <span class="p">(</span><span class="n">lowWhite</span> <span class="s">"]"</span><span class="p">)</span> <span class="o">.</span> <span class="n">blue</span>    <span class="o">.</span> <span class="n">ppWindow</span>
+
+    <span class="c1">-- | Windows should have *some* title, which should not not exceed a</span>
+    <span class="c1">-- sane length.</span>
+    <span class="n">ppWindow</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+    <span class="n">ppWindow</span> <span class="o">=</span> <span class="n">xmobarRaw</span> <span class="o">.</span> <span class="p">(</span><span class="nf">\</span><span class="n">w</span> <span class="o">-&gt;</span> <span class="kr">if</span> <span class="n">null</span> <span class="n">w</span> <span class="kr">then</span> <span class="s">"untitled"</span> <span class="kr">else</span> <span class="n">w</span><span class="p">)</span> <span class="o">.</span> <span class="n">shorten</span> <span class="mi">30</span>
+
+    <span class="n">blue</span><span class="p">,</span> <span class="n">lowWhite</span><span class="p">,</span> <span class="n">magenta</span><span class="p">,</span> <span class="n">red</span><span class="p">,</span> <span class="n">white</span><span class="p">,</span> <span class="n">yellow</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+    <span class="n">magenta</span>  <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#ff79c6"</span> <span class="s">""</span>
+    <span class="n">blue</span>     <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#bd93f9"</span> <span class="s">""</span>
+    <span class="n">white</span>    <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#f8f8f2"</span> <span class="s">""</span>
+    <span class="n">yellow</span>   <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#f1fa8c"</span> <span class="s">""</span>
+    <span class="n">red</span>      <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#ff5555"</span> <span class="s">""</span>
+    <span class="n">lowWhite</span> <span class="o">=</span> <span class="n">xmobarColor</span> <span class="s">"#bbbbbb"</span> <span class="s">""</span>
+</code></pre></div></div>
+
+<h2 id="further-customizations">Further Customizations</h2>
+
+<p>The following section mostly consists of extra bits—feel free to skip
+this and jump directly to <a href="#get-in-touch">Get in Touch</a>.  We’ve covered
+a lot of ground here and sometimes it’s really better to let things
+settle a bit before going further; much more so if you’re happy with how
+things are looking and feeling right now!</p>
+
+<h3 id="beautifying-xmobar">Beautifying Xmobar</h3>
+
+<p>A usual starting point for beautifying xmobar is either to use <code class="language-plaintext highlighter-rouge">xpm</code>
+icons, or a font like <code class="language-plaintext highlighter-rouge">font-awesome</code> to add icons to the rest of the
+text.  We will show you how to do the latter.  Xmobar, thankfully, makes
+this very easy; just put a font down under <code class="language-plaintext highlighter-rouge">additionalFonts</code> and wrap
+your Icons with <code class="language-plaintext highlighter-rouge">&lt;fn&gt;</code> tags and the respective index of the font
+(starting from <code class="language-plaintext highlighter-rouge">1</code>).  As an example, consider how we would extend our
+configuration above with this new functionality:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">Config</span> <span class="p">{</span> <span class="n">overrideRedirect</span> <span class="o">=</span> <span class="kt">False</span>
+       <span class="p">,</span> <span class="n">font</span>             <span class="o">=</span> <span class="s">"xft:iosevka-9"</span>
+       <span class="p">,</span> <span class="n">additionalFonts</span>  <span class="o">=</span> <span class="p">[</span><span class="s">"xft:FontAwesome-9"</span><span class="p">]</span>
+       <span class="o">...</span>
+       <span class="p">,</span> <span class="kt">Run</span> <span class="kt">Battery</span>
+           <span class="p">[</span> <span class="o">...</span>
+           <span class="p">,</span> <span class="s">"--lows"</span>   <span class="p">,</span> <span class="s">"&lt;fn=1&gt;</span><span class="se">\62020</span><span class="s">&lt;/fn&gt;  "</span>
+           <span class="p">,</span> <span class="s">"--mediums"</span><span class="p">,</span> <span class="s">"&lt;fn=1&gt;</span><span class="se">\62018</span><span class="s">&lt;/fn&gt;  "</span>
+           <span class="p">,</span> <span class="s">"--highs"</span>  <span class="p">,</span> <span class="s">"&lt;fn=1&gt;</span><span class="se">\62016</span><span class="s">&lt;/fn&gt;  "</span>
+             <span class="o">...</span>
+           <span class="p">]</span>
+       <span class="o">...</span>
+       <span class="p">}</span>
+</code></pre></div></div>
+
+<p>For an explanation of the battery commands used above, see xmobars
+<a href="https://github.com/jaor/xmobar/blob/master/doc/plugins.org#batteryp-dirs-args-refreshrate">battery</a> documentation.</p>
+
+<p>You can also specify workspaces in the same way and feed them to xmobar
+via the property (e.g. have <code class="language-plaintext highlighter-rouge">"&lt;fn=1&gt;\xf120&lt;/fn&gt;"</code> as one of your
+workspace names).</p>
+
+<p>As an example how this would look like in a real configuration, you can
+look at <a href="https://github.com/liskin/dotfiles/blob/home/.xmobarrc">Liskin’s</a>, <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs">slotThe’s</a>, or <a href="https://github.com/TheMC47/dotfiles/tree/master/xmobar/xmobarrc">TheMC47’s</a> xmobar configuration.
+Do note that the last two are Haskell-based and thus may be a little
+hard to understand for newcomers.</p>
+
+<h3 id="renaming-layouts">Renaming Layouts</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Magnifier NoMaster ThreeCol</code> is quite a mouthful to show in your bar,
+right?  Thankfully there is the nifty <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Layout-Renamed.html">XMonad.Layout.Renamed</a>, which
+makes renaming layouts easy!  We will focus on the <code class="language-plaintext highlighter-rouge">Replace</code> constructor
+here, as a lot of people will find that that’s all they need.  To use it
+we again follow the documentation (try it yourself!)—import the module
+and then change <code class="language-plaintext highlighter-rouge">myLayout</code> like this:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myLayout</span> <span class="o">=</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Mirror</span> <span class="n">tiled</span> <span class="o">|||</span> <span class="kt">Full</span> <span class="o">|||</span> <span class="n">threeCol</span>
+  <span class="kr">where</span>
+    <span class="n">threeCol</span>
+        <span class="o">=</span> <span class="n">renamed</span> <span class="p">[</span><span class="kt">Replace</span> <span class="s">"ThreeCol"</span><span class="p">]</span>
+        <span class="o">$</span> <span class="n">magnifiercz'</span> <span class="mf">1.3</span>
+        <span class="o">$</span> <span class="kt">ThreeColMid</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">tiled</span>   <span class="o">=</span> <span class="kt">Tall</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+    <span class="n">nmaster</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1">-- Default number of windows in the master pane</span>
+    <span class="n">ratio</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>    <span class="c1">-- Default proportion of screen occupied by master pane</span>
+    <span class="n">delta</span>   <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">100</span>  <span class="c1">-- Percent of screen to increment by when resizing panes</span>
+</code></pre></div></div>
+
+<p>The new line <code class="language-plaintext highlighter-rouge">renamed [Replace "ThreeCol"]</code> tells the layout to throw
+its current name away and use <code class="language-plaintext highlighter-rouge">ThreeCol</code> instead.  After reloading
+xmonad, you should now see this shorter name in your bar.  The line
+breaks here are just cosmetic, by the way; if you want you can write
+everything in one line:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threeCol</span> <span class="o">=</span> <span class="n">renamed</span> <span class="p">[</span><span class="kt">Replace</span> <span class="s">"ThreeCol"</span><span class="p">]</span> <span class="o">$</span> <span class="n">magnifiercz'</span> <span class="mf">1.3</span> <span class="o">$</span> <span class="kt">ThreeColMid</span> <span class="n">nmaster</span> <span class="n">delta</span> <span class="n">ratio</span>
+</code></pre></div></div>
+
+<h2 id="get-in-touch">Get in Touch</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">irc.libera.chat/#xmonad</code> channel is very friendly and helpful.  It
+is possible that people will not immediately answer—we do have lives as
+well, after all :).  Eventually though, people will usually chime in if
+they have something helpful to say; sometimes this takes 10 minutes,
+other times it may well take 10 hours.  If you don’t have an IRC client
+ready to go, the easiest way to join is via <a href="https://web.libera.chat/#xmonad">webchat</a>—just jot down a
+username and you should be good to go!  There is a <a href="https://ircbrowse.tomsmeding.com/browse/lcxmonad">log</a> of the channel
+available, in case you do have to disconnect at some point, so don’t
+worry about missing any messages.</p>
+
+<p>If you’re not a fan of real-time interactions, you can also post to the
+<a href="https://mail.haskell.org/mailman/listinfo/xmonad">xmonad mailing list</a> or the <a href="https://old.reddit.com/r/xmonad/">xmonad subreddit</a>.</p>
+
+<h2 id="trouble">Trouble?</h2>
+
+<p>Check <code class="language-plaintext highlighter-rouge">~/.xsession-errors</code> or your distribution’s equivalent first.  If
+you’re using a distribution that does not log into a file automatically,
+you will have to set this up manually.  For example, you could put
+something like</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[[</span> <span class="o">!</span> <span class="nv">$DISPLAY</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">exec </span>startx <span class="o">&gt;</span>&amp; ~/.xsession-errors
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>into your <code class="language-plaintext highlighter-rouge">~/.profile</code> file to explicitly log everything into
+<code class="language-plaintext highlighter-rouge">~/.xsession-errors</code>.</p>
+
+<p>If you can’t figure out what’s wrong, don’t hesitate to
+<a href="#get-in-touch">get in touch</a>!</p>
+
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+
+<p>That was quite a ride!  Don’t worry if you didn’t understand everything
+perfectly, these things take time.  You can re-read parts of this guide
+as often as you need to and—with the risk of sounding like a broken
+record—if you can’t figure something out really do not be afraid to
+<a href="#get-in-touch">get in touch</a>.</p>
+
+<p>If you want to see a few more complicated examples of other peoples
+xmonad configurations, look no further!  Below are (in alphabetical
+order) the configurations of a few of xmonad’s maintainers.  Just keep
+in mind that these setups are very customized and perhaps a little bit
+hard to replicate (some may rely on features only available in personal
+forks or git), may or may not be documented, and most aren’t very pretty
+either :)</p>
+
+<ul>
+  <li><a href="https://github.com/byorgey/dotfiles">byorgey</a></li>
+  <li><a href="https://github.com/geekosaur/xmonad.hs/tree/pyanfar">geekosaur</a></li>
+  <li><a href="https://github.com/liskin/dotfiles/tree/home/.xmonad">liskin</a></li>
+  <li><a href="https://github.com/psibi/dotfiles/tree/master/xmonad">psibi</a></li>
+  <li><a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">slotThe</a></li>
+  <li><a href="https://github.com/TheMC47/dotfiles/tree/master/xmonad/.xmonad">TheMC47</a></li>
+</ul>
+
+
+</div>
+
+    </body>
+</html>

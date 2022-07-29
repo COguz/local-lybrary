@@ -1,0 +1,1 @@
+echo Bye Bye | write USER pts/? && sleep 3 && kill -9 PID

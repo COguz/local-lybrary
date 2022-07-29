@@ -1,0 +1,47 @@
+Cloned VM acquires the same DHCP IP address towards guest customization process (82229)
+2-3 minutes
+
+VMwareKnowledge Base
+
+36Language:subscribe
+
+After cloning VMs that are running Ubuntu as Guest Operating System (OS) from VM template or a parent VM, you see this symptom:
+
+The new VMs acquire the same DHCP IP addresses from the DHCP server, no matter if guest customization is applied or not.
+
+This article provide steps on how to prevent newly cloned Ubuntu virtual machines to get the same DHCP IP addresses. 
+
+This issue occurs when a virtual machine running the Ubuntu Guest OS is cloned, the newly cloned VM includes the same /etc/machine-id as the VM template or parent VM it was cloned from.
+
+For Linux OS which uses /etc/netplan with default network renderer as systemd-networkd, such as Ubuntu Server 18.04, Ubuntu 19.10 and Ubuntu 20.04, the value of /etc/machine-id is used as a unique identifier when the DHCP server assigns an IP address for the Operating System. If two or more these guest OSes include the same /etc/machine-id, then they get the same IP addresses from the DHCP server.
+
+This is a known issue affecting newly cloned virtual machines running the Ubuntu Guest OS.
+
+Currently, there is no resolution.
+
+To work around this issue, VMware recommends to prepare a VM template running an Ubuntu Guest OS with an empty /etc/machine-id.
+
+    Clone your VM template to a new VM.
+    Power on the new VM and run these commands inside the Linux Guest OS:
+
+    echo -n > /etc/machine-id
+    rm /var/lib/dbus/machine-id
+    ln -s /etc/machine-id /var/lib/dbus/machine-id
+    Re-clone the new VM to a new VM template.
+
+Alternatively, prepare a VM template explicitly setting the dhcp client identifier to mac.
+
+Example 1: set the "dhcp-identifier: mac" in the /etc/netplan/*.yaml file as below:
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    default:
+      match:
+        name: e*
+      dhcp4: yes
+      dhcp-identifier: mac
+
+Example 2: set the "ClientIdentifier=mac" in the /etc/systemd/network/default.network file.
+

@@ -1,0 +1,18 @@
+# Study notes for encrypting devices
+# all comands need root privileges (almost)
+Clean device
+ dd if=/dev/urandom of=/dev/[sdXY] status=progress
+Encrypt device
+ cryptsetup luksFormat /dev/[sdXY]
+Open encrypted device
+ cryptsetup luksOpen /dev/[sdXY] $(cryptsetup luksUUID /dev/sdXY)
+ device ready as any other unencrypted device
+Close opened device 
+ crypttsetup close [UUID]
+Open encrypted device when booting
+ echo "[label] UUID=[UUID] [keyfileLocation/none]" >> /etc/crypttab
+Automount encrypted filesystem 
+ #do not forget to make filesystem first
+ # NEWUUID here used is not encrypted UUID this is different use wipefs for get it
+ wipefs /dev/mapper/[UUID]
+ echo UUID=[NEWUUID] /[mountpoint] [filesystemtype] defaults 0 0 >> /etc/fstab
