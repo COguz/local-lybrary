@@ -150,7 +150,9 @@
         "psutils",
         "man-db",
 	"plocate",
-        "python"
+        "python",
+	"newsboat"
+
     ],
     "plugin": null,
     "profile": {
